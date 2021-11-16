@@ -1,5 +1,6 @@
 /* selectors */
 export const getAll = ({posts}) => posts.data;
+export const getAllUsers = ({users}) => users;
 
 /* action name creator */
 const reducerName = 'posts';

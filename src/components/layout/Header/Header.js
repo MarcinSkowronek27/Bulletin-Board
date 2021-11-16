@@ -34,7 +34,8 @@ const Component = ({ className, user }) => {
             label='User'
             onChange={handleUserChange}
           >
-            <MenuItem value={'Logged'}>Logged</MenuItem>
+            <MenuItem value={'admin'}>Admin</MenuItem>
+            <MenuItem value={'userLogged'}>User</MenuItem>
             <MenuItem value={'notLogged'}>Not logged</MenuItem>
           </Select>
           <Link href="/">Posts</Link>

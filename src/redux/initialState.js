@@ -31,5 +31,18 @@ export const initialState = {
       active: false,
       error: false,
     },
+    users: [
+      {
+        id: 1,
+        name: 'admin',
+        logged: false,
+        email: 'admin@example.com',
+      },
+      {
+        id: 2,
+        name: 'user',
+        logged: false,
+        email: 'adamdoe@example.com',
+      }],
   },
 };
