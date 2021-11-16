@@ -1,4 +1,4 @@
-@import '../../../styles/settings.scss';
+@import "../../../styles/settings.scss";
 
 .root {
   padding: ($base-size * 2) 0;
@@ -14,11 +14,13 @@
     display: inline-block;
     margin: 24px 12px;
 
-    .email {
+    .details {
       margin: 12px 0;
-
       > * {
         font-size: 0.8rem;
+      }
+      .price {
+        font-size: 20px;
       }
     }
 
