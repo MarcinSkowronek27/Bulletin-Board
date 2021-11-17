@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/postsRedux';
-import { getAllUsers} from '../../../redux/usersRedux';
+import { getAllUsers } from '../../../redux/usersRedux';
 // import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
@@ -135,9 +135,14 @@ const Component = ({ className, getAllPosts, getUser, children }) => {
                 <Button size="small" color="primary" component={Link} href="post/:id">
                   See more
                 </Button>
-                <Button size="small" color="primary" component={Link} href="post/:id/edit">
+                {getUser.email === post.email ? <Button size="small" color="primary" component={Link} href="post/:id/edit">
                   Edit
                 </Button>
+                  :
+                  <Button size="small" color="primary" component={Link} href="*">
+                    Edit
+                  </Button>
+                }
               </CardActions>
             }
           </Card>

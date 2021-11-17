@@ -33,7 +33,7 @@ export const initialState = {
         text: 'Habiba habababa',
         created: '2021-11-12',
         updated: '2021-11-12',
-        email: 'adamDoe@example.com',
+        email: 'adamdoe@example.com',
         status: 'published',
         image: 'https://images.pexels.com/photos/4065899/pexels-photo-4065899.jpeg?cs=srgb&dl=pexels-cottonbro-4065899.jpg&fm=jpg',
         price: '580',
@@ -47,17 +47,17 @@ export const initialState = {
   },
   users:
   //  [
-  {
-    id: 1,
-    name: 'admin',
-    logged: true,
-    email: 'admin@example.com',
-  },
   // {
-  //   id: 2,
-  //   name: 'user',
-  //   logged: false,
-  //   email: 'adamdoe@example.com',
-  // }
+  //   id: 1,
+  //   name: 'admin',
+  //   logged: true,
+  //   email: 'admin@example.com',
+  // },
+  {
+    id: 2,
+    name: 'user',
+    logged: false,
+    email: 'adamdoe@example.com',
+  },
   // ],
 };
