@@ -1,5 +1,5 @@
 /* selectors */
-export const getAllUsers = ({ posts }) => posts.users;
+export const getAllUsers = ({ users }) => users;
 
 /* action name creator */
 const reducerName = 'users';

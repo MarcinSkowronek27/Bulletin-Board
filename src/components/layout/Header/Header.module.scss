@@ -1,9 +1,21 @@
 @import "../../../styles/settings.scss";
 
-// .root {
-// }
-.toolbar {
-  display: flex;
-  justify-content: center;
-  color: red;
+.root {
+  .toolbar {
+    display: flex;
+    justify-content: center;
+
+    > *, .profile > *{
+      color: $color-light;
+      text-transform: uppercase;
+    }
+    label {
+      color: inherit;
+      font-weight: 400;
+    }
+  }
+  .link {
+    color: inherit;
+    font-weight: 400;
+  }
 }

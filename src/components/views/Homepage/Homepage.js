@@ -5,11 +5,12 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/postsRedux';
-import { getAllUsers } from '../../../redux/usersRedux';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import { getAllUsers} from '../../../redux/usersRedux';
+// import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
 import { Typography } from '@material-ui/core';
-import { CssBaseline } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
+// import { CssBaseline } from '@material-ui/core';
 import { Card } from '@material-ui/core';
 import { CardMedia } from '@material-ui/core';
 import { CardContent } from '@material-ui/core';
@@ -43,7 +44,23 @@ const Component = ({ className, getAllPosts, getUser, children }) => {
   return (
     // <ThemeProvider theme={theme}>
     <div className={clsx(className, styles.root)}>
-      <CssBaseline />
+      {/* <CssBaseline /> */}
+      {getUser.logged === true ?
+        <Grid
+          container
+          spacing={1}
+          direction="row"
+          alignItems="center"
+          justifyContent="space-around"
+        >
+          <Grid item>
+            <Button variant="contained" color="primary" component={Link} href="post/add">
+              Add post
+            </Button>
+          </Grid>
+        </Grid>
+        : ''
+      }
       <Typography variant="h5">
         Posts:
       </Typography>
@@ -113,6 +130,16 @@ const Component = ({ className, getAllPosts, getUser, children }) => {
                 </Typography>
               </CardContent>
             </Collapse>
+            {getUser.logged === true &&
+              <CardActions>
+                <Button size="small" color="primary" component={Link} href="post/:id">
+                  See more
+                </Button>
+                <Button size="small" color="primary" component={Link} href="post/:id/edit">
+                  Edit
+                </Button>
+              </CardActions>
+            }
           </Card>
         ))}
       </div>
@@ -140,14 +167,15 @@ Component.propTypes = {
       location: PropTypes.string,
     })
   ),
-  getUser: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      name: PropTypes.string,
-      logged: PropTypes.string,
-      email: PropTypes.string,
-    })
-  ),
+  getUser: PropTypes.object,
+  // getUser: PropTypes.arrayOf(
+  //   PropTypes.shape({
+  //     id: PropTypes.number,
+  //     name: PropTypes.string,
+  //     logged: PropTypes.boolean,
+  //     email: PropTypes.string,
+  //   })
+  // ),
 };
 
 const mapStateToProps = state => ({
@@ -156,7 +184,7 @@ const mapStateToProps = state => ({
 });
 
 // const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
+//   userStatus: status => dispatch(getUserStatus(status)),
 // });
 
 const Container = connect(mapStateToProps)(Component);

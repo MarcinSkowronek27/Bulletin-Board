@@ -12,23 +12,25 @@ import { Link } from '@material-ui/core';
 // import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { getAllUsers, getUserStatus } from '../../../redux/usersRedux';
 
 import styles from './Header.module.scss';
 
-const Component = ({ className, user }) => {
+const Component = ({ className, users, userStatus }) => {
 
-  // const handleUserChange = (e) => {
-  //   e.preventDefault();
-  //   if (e.target.value === 'Logged') user = 'OK';
-  //   else user = 'NOK';
-  // };
+  const handleUserChange = (e) => {
+    e.preventDefault();
+
+    if (users.logged === false) userStatus(true);
+    else userStatus(false);
+  };
+
   return (
     <div className={clsx(className, styles.root)}>
       <AppBar position="static">
         <Toolbar disableGutters className={clsx(className, styles.toolbar)}>
-          <InputLabel id="demo-simple-select-label">User</InputLabel>
+          {/* <InputLabel id="label">User</InputLabel> */}
           {/* <Select
             value={user}
             label='User'
@@ -39,11 +41,17 @@ const Component = ({ className, user }) => {
             <MenuItem value={'notLogged'}>Not logged</MenuItem>
           </Select> */}
           <Link href="/">Posts</Link>
-          {user === 'Logged' ?
-            <Link component={Button} href="https://">Login</Link>
+          {users.logged === true ?
+            <div className={clsx(className, styles.profile)}>
+              <Button>My profile</Button>
+              <Button>My posts</Button>
+              <Button component={Link} href="/" onClick={handleUserChange}>Logout</Button>
+              {/* <Link href="/" onClick={handleUserChange}>Logout</Link> */}
+            </div>
             :
             <>
-              <Link component={Button} href="https://google.com">Login</Link>
+              {/* <Link component={Button} href="https://google.com" >Login</Link> */}
+              <Button href="/" onClick={handleUserChange}>Login</Button>
             </>
           }
         </Toolbar>
@@ -55,22 +63,22 @@ const Component = ({ className, user }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  user: PropTypes.object,
-  setUser: PropTypes.func,
+  users: PropTypes.object,
+  userStatus: PropTypes.func,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  users: getAllUsers(state),
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  userStatus: status => dispatch(getUserStatus(status)),
+});
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as Header,
-  // Container as Header,
+  // Component as Header,
+  Container as Header,
   Component as HeaderComponent,
 };
