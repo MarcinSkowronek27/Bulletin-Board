@@ -8,8 +8,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import { Link } from '@material-ui/core';
 
-// import Select from '@material-ui/core/Select';
-// import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { connect } from 'react-redux';
@@ -19,28 +19,35 @@ import styles from './Header.module.scss';
 
 const Component = ({ className, users, userStatus }) => {
 
+  const [user, setUser] = React.useState('');
   const handleUserChange = (e) => {
     e.preventDefault();
-
-    if (users.logged === false) userStatus(true);
+    // console.log('event:', e.target.value);
+    setUser(e.target.value);
+    if (users.logged === false && e.target.value === 'admin') userStatus(true);
     else userStatus(false);
   };
+
+  // const handleChange = (e) => {
+  //   // console.log('event:', e.target.value);
+  //   setUser(e.target.value);
+  // };
 
   return (
     <div className={clsx(className, styles.root)}>
       <AppBar position="static">
         <Toolbar disableGutters className={clsx(className, styles.toolbar)}>
-          {/* <InputLabel id="label">User</InputLabel> */}
-          {/* <Select
+          <InputLabel id="label">Choose profile:</InputLabel>
+          <Select id="select"
             value={user}
-            label='User'
+            label='Users:'
             onChange={handleUserChange}
           >
             <MenuItem value={'admin'}>Admin</MenuItem>
-            <MenuItem value={'userLogged'}>User</MenuItem>
+            <MenuItem value={'user'}>User</MenuItem>
             <MenuItem value={'notLogged'}>Not logged</MenuItem>
-          </Select> */}
-          <Link href="/">Posts</Link>
+          </Select>
+          {/* <Link href="/">Posts</Link> */}
           {users.logged === true ?
             <div className={clsx(className, styles.profile)}>
               <Button>My profile</Button>
