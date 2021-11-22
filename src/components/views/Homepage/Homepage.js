@@ -132,7 +132,7 @@ const Component = ({ className, getAllPosts, getUser, children }) => {
             </Collapse>
             {getUser.logged === true &&
               <CardActions>
-                <Button size="small" color="primary" component={Link} href="post/:id">
+                <Button size="small" color="primary" component={Link} href={`post/${post.id}`}>
                   See more
                 </Button>
                 {getUser.email === post.email ? <Button size="small" color="primary" component={Link} href="post/:id/edit">

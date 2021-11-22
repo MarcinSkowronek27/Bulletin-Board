@@ -47,7 +47,7 @@ const Component = ({ className, users, userStatus }) => {
             <MenuItem value={'user'}>User</MenuItem>
             <MenuItem value={'notLogged'}>Not logged</MenuItem>
           </Select>
-          {/* <Link href="/">Posts</Link> */}
+          <Link href="/">Posts</Link>
           {users.logged === true ?
             <div className={clsx(className, styles.profile)}>
               <Button>My profile</Button>
