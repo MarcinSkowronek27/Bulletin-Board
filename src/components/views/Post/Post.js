@@ -22,92 +22,95 @@ import IconButton from '@material-ui/core/IconButton';
 import { getAll } from '../../../redux/postsRedux';
 import { getAllUsers } from '../../../redux/usersRedux';
 
+import { useParams } from 'react-router';
+
 import styles from './Post.module.scss';
 
-const Component = ({ className, getAllPosts, getUser, children, id, image, title, }) => {
-
+const Component = ({ className, getAllPosts, getUser, children }) => {
+  const { id } = useParams();
   const [expanded, setExpanded] = React.useState(false);
 
-  // const handleExpandClick = () => {
-  //   setExpanded(!expanded);
-  // };
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
 
-  console.log(id, title);
+  console.log(id);
   return (
     <div className={clsx(className, styles.root)}>
-      <Card key={getAllPosts[0].id} className={clsx(className, styles.card)}>
-        {getAllPosts[0].image &&
-          <CardMedia
+      <h2>Post</h2>
+      <Card key={getAllPosts[id - 1].id} className={clsx(className, styles.card)}>
+        {getAllPosts[id - 1].image &&
+          <CardMedia className={styles.image}
             component="img"
             height="250"
-            image={getAllPosts[0].image}
+            image={getAllPosts[id - 1].image}
             alt="post-image"
           />
         }
-        {/* <CardContent>
-            <List>
-              <ListItem>
-                <Typography gutterBottom variant="h4" component="div">
-                  {title}
-                </Typography>
-              </ListItem>
-            </List>
-            <Divider />
-            <div className={clsx(className, styles.details)}>
-              <Typography className={styles.price}>
-                {post.price && `Price: ${post.price}PLN`}
+        <CardContent>
+          <List>
+            <ListItem>
+              <Typography gutterBottom variant="h4" component="div">
+                {getAllPosts[id - 1].title}
               </Typography>
-              <Typography>
-                Author: {post.email}
-              </Typography>
-              <Typography className={styles.test}>
-                Created: {post.created}
-              </Typography>
-              {(post.updated !== post.created) &&
-                <Typography>
-                  Updated: {post.updated}
-                </Typography>
-              }
-              <Typography>
-                {post.phone && `Phone number: ${post.phone}`}
-              </Typography>
-              <Typography>
-                {post.location && `Location: ${post.location}`}
-              </Typography>
-            </div>
-          </CardContent>
+            </ListItem>
+          </List>
           <Divider />
-          <CardActions disableSpacing>
-            <Typography gutterBottom component="div">
-              See description
+          <div className={clsx(className, styles.details)}>
+            <Typography className={styles.price}>
+              {getAllPosts[id - 1].price && `Price: ${getAllPosts[id - 1].price}PLN`}
             </Typography>
-            <IconButton
-              className={clsx(styles.expand, {
-                [styles.expandOpen]: expanded,
-              })}
-              onClick={() => handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </IconButton>
-          </CardActions>
-          <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph className={clsx(className, styles.text)}>
-                {post.text}
+            <Typography>
+              Author: {getAllPosts[id - 1].email}
+            </Typography>
+            <Typography className={styles.test}>
+              Created: {getAllPosts[id - 1].created}
+            </Typography>
+            {(getAllPosts[id - 1].updated !== getAllPosts[id - 1].created) &&
+              <Typography>
+                Updated: {getAllPosts[id - 1].updated}
               </Typography>
-            </CardContent>
-          </Collapse>
-          {getUser.logged === true &&
-            <CardActions>
-              {getUser.email === post.email ? <Button size="small" color="primary" component={Link} href="*">
-                Edit
-              </Button>
-                : ''
-              }
-            </CardActions>
-          } */}
+            }
+            <Typography>
+              {getAllPosts[id - 1].phone && `Phone number: ${getAllPosts[id - 1].phone}`}
+            </Typography>
+            <Typography>
+              {getAllPosts[id - 1].location && `Location: ${getAllPosts[id - 1].location}`}
+            </Typography>
+          </div>
+        </CardContent>
+        <Divider />
+        <CardActions disableSpacing>
+          <Typography gutterBottom component="div">
+            See description
+          </Typography>
+          <IconButton
+            className={clsx(styles.expand, {
+              [styles.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <Typography paragraph className={clsx(className, styles.text)}>
+              {getAllPosts[id - 1].text}
+            </Typography>
+          </CardContent>
+        </Collapse>
+        {getUser.logged === true &&
+          <CardActions>
+            {getUser.email === getAllPosts[id - 1].email || getUser.name === 'admin' ? <Button size="small" color="primary" component={Link} href="/">
+              Edit
+            </Button>
+              : ''
+            }
+          </CardActions>
+        }
       </Card>
       {children}
     </div>

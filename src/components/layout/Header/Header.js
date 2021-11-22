@@ -57,8 +57,8 @@ const Component = ({ className, users, userStatus }) => {
             </div>
             :
             <>
-              {/* <Link component={Button} href="https://google.com" >Login</Link> */}
-              <Button href="/" onClick={handleUserChange}>Login</Button>
+              <Link component={Button} href="https://google.com" >Login</Link>
+              {/* <Button href="/" onClick={handleUserChange}>Login</Button> */}
             </>
           }
         </Toolbar>
