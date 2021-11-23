@@ -26,27 +26,27 @@ import { getAllUsers } from '../../../redux/usersRedux';
 
 import styles from './Post.module.scss';
 
-const Component = ({ className, getAllPosts, getUser, children, id, image }) => {
+const Component = ({ className, getAllPosts, getUser, children, props}) => {
   // const { id } = useParams();
+  let id = props.match.params.id;
   const [expanded, setExpanded] = React.useState(false);
-
   const getPostById = id => getAllPosts.find(item => item.id === id);
-  console.log('funkcja getById', getPostById());
+  console.log('funkcja getPostById', getPostById());
+  console.log('id', id);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  console.log(image);
   return (
     <div className={clsx(className, styles.root)}>
       <h2>Post</h2>
       <Card key={getAllPosts[id - 1].id} className={clsx(className, styles.card)}>
-        {getAllPosts[id - 1].image &&
+        {getPostById().image &&
           <CardMedia className={styles.image}
             component="img"
             height="250"
-            image={getAllPosts[id - 1].image}
+            image={getPostById().image}
             alt="post-image"
           />
         }
@@ -126,6 +126,8 @@ Component.propTypes = {
   id: PropTypes.string,
   title: PropTypes.string,
   image: PropTypes.string,
+  match: PropTypes.object,
+  props: PropTypes.object,
   getAllPosts: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
@@ -147,8 +149,7 @@ Component.propTypes = {
 const mapStateToProps = (state, props) => ({
   getAllPosts: getAll(state),
   getUser: getAllUsers(state),
-  id: props.match.params.id,
-  image: props.match.params.image,
+  props,
 });
 
 // const mapDispatchToProps = dispatch => ({
