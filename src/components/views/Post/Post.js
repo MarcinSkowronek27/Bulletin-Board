@@ -22,19 +22,22 @@ import IconButton from '@material-ui/core/IconButton';
 import { getAll } from '../../../redux/postsRedux';
 import { getAllUsers } from '../../../redux/usersRedux';
 
-import { useParams } from 'react-router';
+// import { useParams } from 'react-router';
 
 import styles from './Post.module.scss';
 
-const Component = ({ className, getAllPosts, getUser, children }) => {
-  const { id } = useParams();
+const Component = ({ className, getAllPosts, getUser, children, id, image }) => {
+  // const { id } = useParams();
   const [expanded, setExpanded] = React.useState(false);
+
+  const getPostById = id => getAllPosts.find(item => item.id === id);
+  console.log('funkcja getById', getPostById());
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
 
-  console.log(id);
+  console.log(image);
   return (
     <div className={clsx(className, styles.root)}>
       <h2>Post</h2>
@@ -120,7 +123,7 @@ const Component = ({ className, getAllPosts, getUser, children }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  id: PropTypes.number,
+  id: PropTypes.string,
   title: PropTypes.string,
   image: PropTypes.string,
   getAllPosts: PropTypes.arrayOf(
@@ -141,9 +144,11 @@ Component.propTypes = {
   getUser: PropTypes.object,
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
   getAllPosts: getAll(state),
   getUser: getAllUsers(state),
+  id: props.match.params.id,
+  image: props.match.params.image,
 });
 
 // const mapDispatchToProps = dispatch => ({
