@@ -24,7 +24,7 @@ const Component = ({ className, users, userStatus }) => {
     e.preventDefault();
     // console.log('event:', e.target.value);
     setUser(e.target.value);
-    if (users.logged === false && e.target.value === 'admin') userStatus(true);
+    if ((users.logged === false && e.target.value === 'admin')) userStatus(true);
     else userStatus(false);
   };
 

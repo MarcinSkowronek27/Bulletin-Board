@@ -135,7 +135,7 @@ const Component = ({ className, getAllPosts, getUser, children }) => {
                 <Button size="small" color="primary" component={Link} href={`post/${post.id}`}>
                   See more
                 </Button>
-                {getUser.email === post.email ? <Button size="small" color="primary" component={Link} href="post/:id/edit">
+                {getUser.email === post.email ? <Button size="small" color="primary" component={Link} href={`post/${post.id}/edit`}>
                   Edit
                 </Button>
                   :

@@ -26,12 +26,12 @@ import { getAllUsers } from '../../../redux/usersRedux';
 
 import styles from './Post.module.scss';
 
-const Component = ({ className, getAllPosts, getUser, children, props}) => {
+const Component = ({ className, getAllPosts, getUser, children, props }) => {
   // const { id } = useParams();
   let id = props.match.params.id;
   const [expanded, setExpanded] = React.useState(false);
   const getPostById = id => getAllPosts.find(item => item.id === id);
-  console.log('funkcja getPostById', getPostById());
+  console.log('funkcja getPostById', getPostById(id));
   console.log('id', id);
 
   const handleExpandClick = () => {
@@ -41,12 +41,12 @@ const Component = ({ className, getAllPosts, getUser, children, props}) => {
   return (
     <div className={clsx(className, styles.root)}>
       <h2>Post</h2>
-      <Card key={getAllPosts[id - 1].id} className={clsx(className, styles.card)}>
-        {getPostById().image &&
+      <Card key={getPostById(id).id} className={clsx(className, styles.card)}>
+        {getPostById(props.id).image &&
           <CardMedia className={styles.image}
             component="img"
             height="250"
-            image={getPostById().image}
+            image={getPostById(id).image}
             alt="post-image"
           />
         }
@@ -107,7 +107,7 @@ const Component = ({ className, getAllPosts, getUser, children, props}) => {
         </Collapse>
         {getUser.logged === true &&
           <CardActions>
-            {getUser.email === getAllPosts[id - 1].email || getUser.name === 'admin' ? <Button size="small" color="primary" component={Link} href="/">
+            {(getUser.email === getAllPosts[id - 1].email || getUser.name === 'admin') ? <Button size="small" color="primary" component={Link} href={`${id}/edit`}>
               Edit
             </Button>
               : ''
