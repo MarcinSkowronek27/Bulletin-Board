@@ -30,7 +30,7 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
   // const { id } = useParams();
   let id = props.match.params.id;
   const [expanded, setExpanded] = React.useState(false);
-  const getPostById = id => getAllPosts.find(item => item.id === id);
+  const getPostById = id => getAllPosts.find(item => item.id == id);
   console.log('funkcja getPostById', getPostById(id));
   console.log('id', id);
 
@@ -42,7 +42,7 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
     <div className={clsx(className, styles.root)}>
       <h2>Post</h2>
       <Card key={getPostById(id).id} className={clsx(className, styles.card)}>
-        {getPostById(props.id).image &&
+        {getPostById(id).image &&
           <CardMedia className={styles.image}
             component="img"
             height="250"
