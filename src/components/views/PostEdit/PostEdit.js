@@ -38,7 +38,7 @@ const Component = ({ className, children, getUser }) => {
             spacing={1}
             direction="row"
             alignItems="center"
-            justifyContent="left"
+            justifyContent="center"
           >
             <Grid item>
               <Button variant="contained" color="primary" component={Link} href="/">
@@ -64,12 +64,12 @@ const Component = ({ className, children, getUser }) => {
               <OutlinedInput
                 id="price"
                 onChange={handleChange('amount')}
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                startAdornment={<InputAdornment position="start">PLN</InputAdornment>}
                 labelWidth={60}
                 defaultValue={`200`}
               />
             </FormControl>
-            <TextField id="location" label="Location" variant="outlined" defaultValue={`London, UK, street Lorem ipsum 15`} />
+            <TextField id="location" label="Location" variant="outlined" defaultValue={`Warsaw, PL, street Lorem ipsum 42`} />
             <div>
               <input
                 accept=".jpg, .jpeg, .png, .gif"

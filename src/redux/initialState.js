@@ -56,7 +56,7 @@ export const initialState = {
   {
     id: 2,
     name: 'user',
-    logged: false,
+    logged: true,
     email: 'johndoe@example.com',
   },
   // ],

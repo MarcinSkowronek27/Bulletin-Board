@@ -30,9 +30,10 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
   // const { id } = useParams();
   let id = props.match.params.id;
   const [expanded, setExpanded] = React.useState(false);
+  /* eslint-disable-next-line */
   const getPostById = id => getAllPosts.find(item => item.id == id);
-  console.log('funkcja getPostById', getPostById(id));
-  console.log('id', id);
+  // console.log('funkcja getPostById', getPostById(id));
+  // console.log('id', id);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -54,31 +55,31 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
           <List>
             <ListItem>
               <Typography gutterBottom variant="h4" component="div">
-                {getAllPosts[id - 1].title}
+                {getPostById(id).title}
               </Typography>
             </ListItem>
           </List>
           <Divider />
           <div className={clsx(className, styles.details)}>
             <Typography className={styles.price}>
-              {getAllPosts[id - 1].price && `Price: ${getAllPosts[id - 1].price}PLN`}
+              {getPostById(id).price && `Price: ${getPostById(id).price}PLN`}
             </Typography>
             <Typography>
-              Author: {getAllPosts[id - 1].email}
+              Author: {getPostById(id).email}
             </Typography>
             <Typography className={styles.test}>
-              Created: {getAllPosts[id - 1].created}
+              Created: {getPostById(id).created}
             </Typography>
-            {(getAllPosts[id - 1].updated !== getAllPosts[id - 1].created) &&
+            {(getPostById(id).updated !== getPostById(id).created) &&
               <Typography>
-                Updated: {getAllPosts[id - 1].updated}
+                Updated: {getPostById(id).updated}
               </Typography>
             }
             <Typography>
-              {getAllPosts[id - 1].phone && `Phone number: ${getAllPosts[id - 1].phone}`}
+              {getPostById(id).phone && `Phone number: ${getPostById(id).phone}`}
             </Typography>
             <Typography>
-              {getAllPosts[id - 1].location && `Location: ${getAllPosts[id - 1].location}`}
+              {getPostById(id).location && `Location: ${getPostById(id).location}`}
             </Typography>
           </div>
         </CardContent>
@@ -101,13 +102,13 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph className={clsx(className, styles.text)}>
-              {getAllPosts[id - 1].text}
+              {getPostById(id).text}
             </Typography>
           </CardContent>
         </Collapse>
         {getUser.logged === true &&
           <CardActions>
-            {(getUser.email === getAllPosts[id - 1].email || getUser.name === 'admin') ? <Button size="small" color="primary" component={Link} href={`${id}/edit`}>
+            {getUser.email === getPostById(id).email || getUser.name === 'admin' ? <Button size="small" color="primary" component={Link} href={`${id}/edit`}>
               Edit
             </Button>
               : ''
