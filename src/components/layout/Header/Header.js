@@ -13,7 +13,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import InputLabel from '@material-ui/core/InputLabel';
 
 import { connect } from 'react-redux';
-import { getAllUsers, getUserStatus } from '../../../redux/usersRedux';
+import { getAllUsers, setUserStatus } from '../../../redux/usersRedux';
 
 import styles from './Header.module.scss';
 
@@ -80,7 +80,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  userStatus: status => dispatch(getUserStatus(status)),
+  userStatus: status => dispatch(setUserStatus(status)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

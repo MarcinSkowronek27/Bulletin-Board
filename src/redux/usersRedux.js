@@ -6,17 +6,17 @@ const reducerName = 'users';
 const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
-const GET_USER_STATUS = createActionName('GET_USER_STATUS');
+const SET_USER_STATUS = createActionName('SET_USER_STATUS');
 
 /* action creators */
-export const getUserStatus = payload => ({ payload, type: GET_USER_STATUS });
+export const setUserStatus = payload => ({ payload, type: SET_USER_STATUS });
 
 /* thunk creators */
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
-    case GET_USER_STATUS: {
+    case SET_USER_STATUS: {
       return {
         ...statePart,
         logged: action.payload,

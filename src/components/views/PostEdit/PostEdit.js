@@ -5,7 +5,7 @@ import clsx from 'clsx';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/postsRedux';
-import { getAllUsers, getUserStatus } from '../../../redux/usersRedux';
+import { getAllUsers, setUserStatus } from '../../../redux/usersRedux';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -108,7 +108,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  userStatus: status => dispatch(getUserStatus(status)),
+  userStatus: status => dispatch(setUserStatus(status)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

@@ -13,7 +13,7 @@ import Grid from '@material-ui/core/Grid';
 import { Link } from '@material-ui/core';
 
 import { connect } from 'react-redux';
-import { getAllUsers, getUserStatus } from '../../../redux/usersRedux';
+import { getAllUsers, setUserStatus } from '../../../redux/usersRedux';
 import { NotFound } from '../NotFound/NotFound';
 
 import styles from './PostAdd.module.scss';
@@ -105,7 +105,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  userStatus: status => dispatch(getUserStatus(status)),
+  userStatus: status => dispatch(setUserStatus(status)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);

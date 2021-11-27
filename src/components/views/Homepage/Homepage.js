@@ -189,7 +189,7 @@ const mapStateToProps = state => ({
 });
 
 // const mapDispatchToProps = dispatch => ({
-//   userStatus: status => dispatch(getUserStatus(status)),
+//   userStatus: status => dispatch(setUserStatus(status)),
 // });
 
 const Container = connect(mapStateToProps)(Component);
