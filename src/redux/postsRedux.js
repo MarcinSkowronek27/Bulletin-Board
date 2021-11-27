@@ -1,5 +1,7 @@
+import Axios from 'axios';
+
 /* selectors */
-export const getAll = ({posts}) => posts.data;
+export const getAll = ({ posts }) => posts.data;
 
 /* action name creator */
 const reducerName = 'posts';
@@ -16,7 +18,24 @@ export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 
 /* thunk creators */
+export const fetchPublished = () => {
 
+  return (dispatch, getState) => {
+    const {posts} = getState();
+    console.log(getState());
+    if (posts.data.length === 0 && posts.loading.active === false) {
+      dispatch(fetchStarted());
+      Axios
+        .get('http://localhost:8000/api/posts')
+        .then(res => {
+          dispatch(fetchSuccess(res.data));
+        })
+        .catch(err => {
+          dispatch(fetchError(err.message || true));
+        });
+    }
+  };
+};
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {

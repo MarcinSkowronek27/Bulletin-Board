@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getAll } from '../../../redux/postsRedux';
+import { getAll, fetchPublished} from '../../../redux/postsRedux';
 import { getAllUsers } from '../../../redux/usersRedux';
 // import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -33,7 +33,7 @@ import styles from './Homepage.module.scss';
 //   },
 // });
 
-const Component = ({ className, getAllPosts, getUser, children }) => {
+const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPosts }) => {
   // console.log('getUser', getUser);
   const [expanded] = React.useState(false);
   const [expandedId, setExpandedId] = React.useState(-1);
@@ -41,6 +41,7 @@ const Component = ({ className, getAllPosts, getUser, children }) => {
   const handleExpandClick = (i) => {
     setExpandedId(expandedId === i ? -1 : i);
   };
+  fetchPublishedPosts();
   return (
     // <ThemeProvider theme={theme}>
     <div className={clsx(className, styles.root)}>
@@ -66,7 +67,7 @@ const Component = ({ className, getAllPosts, getUser, children }) => {
       </Typography>
       <div className={clsx(className, styles.postsContainer)}>
         {getAllPosts.map((post, index) => (
-          <Card key={post.id} className={clsx(className, styles.card)}>
+          <Card key={post._id} className={clsx(className, styles.card)}>
             {post.image &&
               <CardMedia
                 component="img"
@@ -173,6 +174,7 @@ Component.propTypes = {
     })
   ),
   getUser: PropTypes.object,
+  fetchPublishedPosts: PropTypes.func,
   // getUser: PropTypes.arrayOf(
   //   PropTypes.shape({
   //     id: PropTypes.number,
@@ -188,11 +190,11 @@ const mapStateToProps = state => ({
   getUser: getAllUsers(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   userStatus: status => dispatch(setUserStatus(status)),
-// });
+const mapDispatchToProps = dispatch => ({
+  fetchPublishedPosts: () => dispatch(fetchPublished()),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as Homepage,
