@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import clsx from 'clsx';
 
 import { connect } from 'react-redux';
-import { getAll, fetchPublished} from '../../../redux/postsRedux';
+import { getAll, fetchPublished } from '../../../redux/postsRedux';
 import { getAllUsers } from '../../../redux/usersRedux';
 // import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -37,7 +37,6 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
   // console.log('getUser', getUser);
   const [expanded] = React.useState(false);
   const [expandedId, setExpandedId] = React.useState(-1);
-
   const handleExpandClick = (i) => {
     setExpandedId(expandedId === i ? -1 : i);
   };
