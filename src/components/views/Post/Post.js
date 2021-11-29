@@ -19,19 +19,18 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 
-import { getAll } from '../../../redux/postsRedux';
+import { getOnePost, fetchPostById } from '../../../redux/postsRedux';
 import { getAllUsers } from '../../../redux/usersRedux';
 
 // import { useParams } from 'react-router';
 
 import styles from './Post.module.scss';
 
-const Component = ({ className, getAllPosts, getUser, children, props }) => {
+const Component = ({ className, post, getUser, children }) => {
   // const { id } = useParams();
-  let id = props.match.params.id;
   const [expanded, setExpanded] = React.useState(false);
   /* eslint-disable-next-line */
-  const getPostById = id => getAllPosts.find(item => item.id == id);
+  // const getPostById = id => getAllPosts.find(item => item.id == id);
   // console.log('funkcja getPostById', getPostById(id));
   // console.log('id', id);
 
@@ -42,12 +41,12 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
   return (
     <div className={clsx(className, styles.root)}>
       <h2>Post</h2>
-      <Card key={getPostById(id).id} className={clsx(className, styles.card)}>
-        {getPostById(id).image &&
+      <Card className={clsx(className, styles.card)}>
+        {post.photo &&
           <CardMedia className={styles.image}
             component="img"
             height="250"
-            image={getPostById(id).image}
+            image={post.photo}
             alt="post-image"
           />
         }
@@ -55,31 +54,31 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
           <List>
             <ListItem>
               <Typography gutterBottom variant="h4" component="div">
-                {getPostById(id).title}
+                {post.title}
               </Typography>
             </ListItem>
           </List>
           <Divider />
           <div className={clsx(className, styles.details)}>
             <Typography className={styles.price}>
-              {getPostById(id).price && `Price: ${getPostById(id).price}PLN`}
+              {post.price && `Price: ${post.price}PLN`}
             </Typography>
             <Typography>
-              Author: {getPostById(id).email}
+              Author: {post.email}
             </Typography>
-            <Typography className={styles.test}>
-              Created: {getPostById(id).created}
+            <Typography >
+              Created: {post.created}
             </Typography>
-            {(getPostById(id).updated !== getPostById(id).created) &&
+            {(post.updated !== post.created) &&
               <Typography>
-                Updated: {getPostById(id).updated}
+                Updated: {post.updated}
               </Typography>
             }
             <Typography>
-              {getPostById(id).phone && `Phone number: ${getPostById(id).phone}`}
+              {post.phone && `Phone number: ${post.phone}`}
             </Typography>
             <Typography>
-              {getPostById(id).location && `Location: ${getPostById(id).location}`}
+              {post.location && `Location: ${post.location}`}
             </Typography>
           </div>
         </CardContent>
@@ -102,13 +101,13 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph className={clsx(className, styles.text)}>
-              {getPostById(id).text}
+              {post.text}
             </Typography>
           </CardContent>
         </Collapse>
         {getUser.logged === true &&
           <CardActions>
-            {getUser.email === getPostById(id).email || getUser.name === 'admin' ? <Button size="small" color="primary" component={Link} href={`${id}/edit`}>
+            {getUser.email === post.email || getUser.name === 'admin' ? <Button size="small" color="primary" component={Link} href={`${post._id}/edit`}>
               Edit
             </Button>
               : ''
@@ -124,40 +123,20 @@ const Component = ({ className, getAllPosts, getUser, children, props }) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  id: PropTypes.string,
-  title: PropTypes.string,
-  image: PropTypes.string,
-  match: PropTypes.object,
-  props: PropTypes.object,
-  getAllPosts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      text: PropTypes.string,
-      created: PropTypes.string,
-      updated: PropTypes.string,
-      email: PropTypes.string,
-      status: PropTypes.string,
-      image: PropTypes.string,
-      price: PropTypes.string,
-      phone: PropTypes.string,
-      location: PropTypes.string,
-    })
-  ),
   getUser: PropTypes.object,
+  post: PropTypes.object,
 };
 
-const mapStateToProps = (state, props) => ({
-  getAllPosts: getAll(state),
+const mapStateToProps = (state) => ({
+  post: getOnePost(state),
   getUser: getAllUsers(state),
-  props,
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = (dispatch, props) => ({
+  fetchOnePost: () => dispatch(fetchPostById(props.match.params.id)),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as Post,
