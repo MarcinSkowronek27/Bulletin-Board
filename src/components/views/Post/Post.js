@@ -20,24 +20,25 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from '@material-ui/core/IconButton';
 
 import { getOnePost, fetchPostById } from '../../../redux/postsRedux';
-import { getAllUsers } from '../../../redux/usersRedux';
+import { getAllUsers, setUserStatus } from '../../../redux/usersRedux';
 
 // import { useParams } from 'react-router';
 
 import styles from './Post.module.scss';
 
-const Component = ({ className, post, getUser, children }) => {
+const Component = ({ className, post, fetchOnePost, getUser, children }) => {
   // const { id } = useParams();
   const [expanded, setExpanded] = React.useState(false);
   /* eslint-disable-next-line */
   // const getPostById = id => getAllPosts.find(item => item.id == id);
   // console.log('funkcja getPostById', getPostById(id));
   // console.log('id', id);
+  // console.log('post', post);
+  fetchOnePost();
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-
   return (
     <div className={clsx(className, styles.root)}>
       <h2>Post</h2>
@@ -59,12 +60,12 @@ const Component = ({ className, post, getUser, children }) => {
             </ListItem>
           </List>
           <Divider />
-          <div className={clsx(className, styles.details)}>
+          <div className={clsx(className, styles.author)}>
             <Typography className={styles.price}>
               {post.price && `Price: ${post.price}PLN`}
             </Typography>
             <Typography>
-              Author: {post.email}
+              Author: {post.author}
             </Typography>
             <Typography >
               Created: {post.created}
@@ -107,11 +108,9 @@ const Component = ({ className, post, getUser, children }) => {
         </Collapse>
         {getUser.logged === true &&
           <CardActions>
-            {getUser.email === post.email || getUser.name === 'admin' ? <Button size="small" color="primary" component={Link} href={`${post._id}/edit`}>
+            <Button size="small" color="primary" component={Link} href={`${post._id}/edit`}>
               Edit
             </Button>
-              : ''
-            }
           </CardActions>
         }
       </Card>
@@ -125,14 +124,16 @@ Component.propTypes = {
   className: PropTypes.string,
   getUser: PropTypes.object,
   post: PropTypes.object,
+  fetchOnePost: PropTypes.func,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state, props) => ({
   post: getOnePost(state),
   getUser: getAllUsers(state),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
+  userStatus: status => dispatch(setUserStatus(status)),
   fetchOnePost: () => dispatch(fetchPostById(props.match.params.id)),
 });
 

@@ -30,14 +30,14 @@ import styles from './Homepage.module.scss';
 //   },
 // });
 
-const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPosts }) => {
+const Component = ({ className, allPosts, allUsers, children, fetchPublishedPosts }) => {
 
   fetchPublishedPosts();
   return (
     // <ThemeProvider theme={theme}>
     <div className={clsx(className, styles.root)}>
       {/* <CssBaseline /> */}
-      {getUser.logged === true ?
+      {allUsers.logged === true ?
         <Grid
           container
           spacing={1}
@@ -57,7 +57,7 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
         Posts:
       </Typography>
       <div className={clsx(className, styles.postsContainer)}>
-        {getAllPosts.map((post, index) => (
+        {allPosts.map((post, index) => (
           <Card key={post._id} className={clsx(className, styles.card)}>
             {post.photo &&
               <CardMedia
@@ -100,12 +100,12 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
               </div>
 
             </CardContent>
-            {getUser.logged === true &&
+            {allUsers.logged === true &&
               <CardActions>
-                <Button size="small" color="primary" component={Link} href={`post/${post.id}`}>
+                <Button size="small" color="primary" component={Link} href={`post/${post._id}`}>
                   See more
                 </Button>
-                {getUser.email === post.email ? <Button size="small" color="primary" component={Link} href={`post/${post._id}/edit`}>
+                {allUsers.email === post.author ? <Button size="small" color="primary" component={Link} href={`post/${post._id}/edit`}>
                   Edit
                 </Button>
                   :
@@ -127,14 +127,14 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  getAllPosts: PropTypes.array,
-  getUser: PropTypes.object,
+  allPosts: PropTypes.array,
+  allUsers: PropTypes.object,
   fetchPublishedPosts: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
-  getAllPosts: getAll(state),
-  getUser: getAllUsers(state),
+  allPosts: getAll(state),
+  allUsers: getAllUsers(state),
 });
 
 const mapDispatchToProps = dispatch => ({
