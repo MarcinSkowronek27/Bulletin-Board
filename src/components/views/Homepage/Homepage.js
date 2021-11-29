@@ -20,9 +20,6 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import IconButton from '@material-ui/core/IconButton';
 
 import styles from './Homepage.module.scss';
 
@@ -34,12 +31,7 @@ import styles from './Homepage.module.scss';
 // });
 
 const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPosts }) => {
-  // console.log('getUser', getUser);
-  const [expanded] = React.useState(false);
-  const [expandedId, setExpandedId] = React.useState(-1);
-  const handleExpandClick = (i) => {
-    setExpandedId(expandedId === i ? -1 : i);
-  };
+
   fetchPublishedPosts();
   return (
     // <ThemeProvider theme={theme}>
@@ -67,11 +59,11 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
       <div className={clsx(className, styles.postsContainer)}>
         {getAllPosts.map((post, index) => (
           <Card key={post._id} className={clsx(className, styles.card)}>
-            {post.image &&
+            {post.photo &&
               <CardMedia
                 component="img"
                 height="250"
-                image={post.image}
+                image={post.photo}
                 alt="post-image"
               />
             }
@@ -89,7 +81,7 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
                   {post.price && `Price: ${post.price}PLN`}
                 </Typography>
                 <Typography>
-                  Author: {post.email}
+                  Author: {post.author}
                 </Typography>
                 <Typography className={styles.test}>
                   Created: {post.created}
@@ -106,40 +98,18 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
                   {post.location && `Location: ${post.location}`}
                 </Typography>
               </div>
+
             </CardContent>
-            <Divider />
-            <CardActions disableSpacing>
-              <Typography gutterBottom component="div">
-                See description
-              </Typography>
-              <IconButton
-                className={clsx(styles.expand, {
-                  [styles.expandOpen]: expanded,
-                })}
-                onClick={() => handleExpandClick(index)}
-                aria-expanded={expandedId === index}
-                aria-label="show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-            <Collapse in={expandedId === index} timeout="auto" unmountOnExit>
-              <CardContent>
-                <Typography paragraph className={clsx(className, styles.text)}>
-                  {post.text}
-                </Typography>
-              </CardContent>
-            </Collapse>
             {getUser.logged === true &&
               <CardActions>
                 <Button size="small" color="primary" component={Link} href={`post/${post.id}`}>
                   See more
                 </Button>
-                {getUser.email === post.email ? <Button size="small" color="primary" component={Link} href={`post/${post.id}/edit`}>
+                {getUser.email === post.email ? <Button size="small" color="primary" component={Link} href={`post/${post._id}/edit`}>
                   Edit
                 </Button>
                   :
-                  <Button size="small" color="primary" component={Link} href="*">
+                  <Button size="small" color="primary" component={Link} href={`post/${post._id}/edit`}>
                     Edit
                   </Button>
                 }
@@ -149,7 +119,7 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
         ))}
       </div>
       {children}
-    </div>
+    </div >
     // </ThemeProvider>
   );
 };
@@ -157,31 +127,9 @@ const Component = ({ className, getAllPosts, getUser, children, fetchPublishedPo
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  getAllPosts: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      text: PropTypes.string,
-      created: PropTypes.string,
-      updated: PropTypes.string,
-      email: PropTypes.string,
-      status: PropTypes.string,
-      image: PropTypes.string,
-      price: PropTypes.string,
-      phone: PropTypes.string,
-      location: PropTypes.string,
-    })
-  ),
+  getAllPosts: PropTypes.array,
   getUser: PropTypes.object,
   fetchPublishedPosts: PropTypes.func,
-  // getUser: PropTypes.arrayOf(
-  //   PropTypes.shape({
-  //     id: PropTypes.number,
-  //     name: PropTypes.string,
-  //     logged: PropTypes.boolean,
-  //     email: PropTypes.string,
-  //   })
-  // ),
 };
 
 const mapStateToProps = state => ({

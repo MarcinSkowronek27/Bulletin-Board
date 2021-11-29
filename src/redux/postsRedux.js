@@ -54,6 +54,7 @@ export const fetchPostById = (id) => {
       });
   };
 };
+
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
   switch (action.type) {
