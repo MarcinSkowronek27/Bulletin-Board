@@ -135,6 +135,7 @@ class Component extends React.Component {
                 <InputLabel htmlFor="outlined-adornment-amount">Price</InputLabel>
                 <OutlinedInput
                   id="price"
+                  name="price"
                   onChange={updateNumberField}
                   startAdornment={<InputAdornment position="start">PLN</InputAdornment>}
                   labelWidth={60}
@@ -143,6 +144,7 @@ class Component extends React.Component {
               <TextField id="location" label="Location" variant="outlined" onChange={updateTextField} />
               <div>
                 <input
+                  name="photo"
                   accept=".jpg, .jpeg, .png, .gif"
                   className={clsx(className, styles.input)}
                   id="contained-button-file"

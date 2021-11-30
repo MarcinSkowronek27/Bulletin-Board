@@ -9,7 +9,7 @@ const postSchema = new mongoose.Schema({
   text: { type: String, required: true },
   photo: { type: String },
   price: { type: Number },
-  phone: { type: String },
+  phone: { type: Number },
   location: { type: String },
 });
 
