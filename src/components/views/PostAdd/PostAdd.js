@@ -15,7 +15,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { connect } from 'react-redux';
-import { getAllUsers, setUserStatus } from '../../../redux/usersRedux';
+import { getAllUsers } from '../../../redux/usersRedux';
 import { addPostRequest } from '../../../redux/postsRedux';
 import { NotFound } from '../NotFound/NotFound';
 
@@ -183,7 +183,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   // w jakim celu tutaj też jest dispatchowany userStatus?
-  userStatus: status => dispatch(setUserStatus(status)),
+  // userStatus: status => dispatch(setUserStatus(status)),
   addPost: (post) => dispatch(addPostRequest(post)),
 });
 

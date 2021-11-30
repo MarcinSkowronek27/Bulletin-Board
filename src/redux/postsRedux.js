@@ -65,7 +65,7 @@ export const addPostRequest = (post) => {
     dispatch(fetchStarted());
 
     Axios
-      .get('http://localhost:8000/api/posts/add', newPost)
+      .post('http://localhost:8000/api/posts/add', newPost)
       .then(res => {
         dispatch(addPost(res.data));
       })

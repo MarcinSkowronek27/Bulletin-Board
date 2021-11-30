@@ -34,7 +34,11 @@ const Component = ({ className, post, fetchOnePost, getUser, children }) => {
   // console.log('funkcja getPostById', getPostById(id));
   // console.log('id', id);
   // console.log('post', post);
-  fetchOnePost();
+  // ta funkcja powinna być uruchomiona w komponencie klasowym i DidMount lub w komponencie funkcyjnym użyć metody use.effect (ogólnie komponenty funkcyjne są lepsze jeżeli chodzi o wydajność) TIPS
+  // nie pisać pojedynczej funkcji fetchOnePost();, bo ona się wykona przy renderowaniu komponentu i "pójdzie w nicość", trzeba zrobić to tak:
+  React.useEffect(() => {
+    fetchOnePost();
+  }, [fetchOnePost]);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
