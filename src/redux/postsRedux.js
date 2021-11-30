@@ -59,9 +59,11 @@ export const fetchPostById = (id) => {
 
 export const addPostRequest = (post) => {
 
-  const newPost = { ...post };
+  const newPost = { ...post};
+
   return (dispatch, getState) => {
     dispatch(fetchStarted());
+
     Axios
       .get('http://localhost:8000/api/posts/add', newPost)
       .then(res => {

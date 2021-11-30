@@ -13,6 +13,7 @@ router.get('/posts', async (req, res) => {
     else res.json(result);
   }
   catch (err) {
+    console.log('tutaj nie działa1');
     res.status(500).json(err);
   }
 });
@@ -25,6 +26,7 @@ router.get('/posts/:id', async (req, res) => {
     else res.json(result);
   }
   catch (err) {
+    console.log('tutaj nie działa2');
     res.status(500).json(err);
   }
 });
@@ -33,21 +35,23 @@ router.post('/posts/add', async (req, res) => {
   try {
     const { author, title, text, photo, created, updated, status, price, phone, location } = req.body;
 
-    if (created && updated && status && title.length >= 10 && text.length >= 20 && author.includes('@')) {
+    if (created && updated && status && title.length > 10 && text.length > 20 && author.includes('@')) {
       // res.json({ message: 'OK' });
+      console.log('tutaj działa');
       const newPost = new Post({
-        author, created, title, updated, text, photo, phone, location, status, price,
+        author, title, created, updated, status, text, photo, price, phone, location,
       });
       await newPost.save();
       if (!newPost) res.status(404).json({ post: 'Not found' });
       else res.json(newPost);
     }
-    else {
-      // res.json({ message: 'something went wrong' });
-      throw new Error('Wrong input!');
-    }
+    // else {
+    //   // res.json({ message: 'something went wrong' });
+    //   throw new Error('Wrong input!');
+    // }
   }
   catch (err) {
+    console.log('tutaj nie działa3');
     res.status(500).json(err);
   }
 });
